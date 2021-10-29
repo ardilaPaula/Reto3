@@ -4,6 +4,8 @@
  */
 package Reto3_Ciclo3_MisionTic.Reto3_Ciclo3;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +33,22 @@ public class RepositorioReservation {
     public void delete(Reservation reservation){
         crud4.delete(reservation);
     }
+    
+    public List<Reservation> ReservationStatus (String status){
+        return crud4.findAllByStatus(status);
+    }
+    
+    public List<Reservation> ReservationTiempoRepositorio (Date a, Date b){
+        return crud4.findAllByStartDateAfterAndStartDateBefore(a, b);
+    }
+    
+    public List<ContadorClient> getClientRepositorio(){
+        List<ContadorClient> res = new ArrayList<>();
+        List<Object[]> report = crud4.countTotalReservationsByClient();
+        for(int i=0; i<report.size(); i++){
+            res.add(new ContadorClient((Long)report.get(i)[1], (Client) report.get(i)[0]));
+        }
+        return res;
+    }
+            
 }

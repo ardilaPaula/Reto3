@@ -7,6 +7,10 @@ package Reto3_Ciclo3_MisionTic.Reto3_Ciclo3;
 /**
  * Import de List
  */
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 /**
  * Import de Optional
@@ -118,5 +122,33 @@ public class ServiciosReservation {
             return true;
         }).orElse(false);
         return aBoolean;
+    }
+    
+    public StatusReservas getRepStatus(){
+        List<Reservation>completed = metodosCrud.ReservationStatus("completed");
+        List<Reservation>cancelled = metodosCrud.ReservationStatus("canceled");
+        return new StatusReservas(completed.size(),cancelled.size());
+    }
+    
+    public List<Reservation> reporteTiempoServicio (String datoA, String datoB){
+        SimpleDateFormat parser = new SimpleDateFormat ("yyy-MM-dd");
+        
+        Date datoUno = new Date();
+        Date datoDos = new Date();
+        
+        try{
+            datoUno = parser.parse(datoA);
+            datoDos = parser.parse(datoB);
+        }catch(ParseException evt){
+            evt.printStackTrace();
+        }if(datoUno.before(datoDos)){
+            return metodosCrud.ReservationTiempoRepositorio(datoUno, datoDos);
+        }else{
+            return new ArrayList<>();
+        }
+    }
+    
+    public List<ContadorClient> reporteClientServicio(){
+        return metodosCrud.getClientRepositorio();
     }
 }

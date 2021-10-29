@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Import de Serializable
  */
 import java.io.Serializable;
+import java.util.Date;
 /**
  * Import de List
  */
@@ -98,7 +99,7 @@ public class Room implements Serializable {
      * Declaracion variable description
      */
     private String description;
-
+    
     /**
      * Relacion de muchos a uno
      */
